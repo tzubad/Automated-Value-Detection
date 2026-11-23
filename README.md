@@ -19,7 +19,6 @@ data/
         gemini_direct_video2values.csv     Gemini^d   (video -> values)
         gemini_2step_script2values.csv     Gemini^2s  (script -> values)
         mistral_2step_script2values.csv    Mistral^2s (script -> values)
-      cleaned/                     raw outputs after the cleaning step in notebooks/4_evaluation
     mlm/                           per-fold predictions of the 3-fold CV MLM classifiers
       roberta_large/                           RoBERTa^2s     fold{0,1,2}_predictions.csv
       deberta_v2_xlarge/                       DeBERTa^2s
@@ -62,7 +61,7 @@ notebooks/
 
 Each TikTok therefore maps to a vector of 38 binary labels (19 endorsed and 19 confronted).
 
-- **Identifiers:** in the ground truth, `1_Link1` is the public TikTok URL. In the prediction files, `filename` (or `1_Link1` in the cleaned files) is `@<handle>_video_<video id>`, which joins with the URL.
+- **Identifiers:** in the ground truth, `1_Link1` is the public TikTok URL. In the LLM prediction files, `filename` is `@<handle>_video_<video id>`, which joins with the URL.
 - **Extra columns in the raw prediction files:** `Has_sound` and `Additional Notes`, both returned by the model.
 
 ### MLM fold predictions
