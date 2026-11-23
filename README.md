@@ -14,15 +14,16 @@ data/
   annotations/
     ground_truth_labels.csv        the 19 value labels per TikTok used as ground truth
   predictions/
-    raw/                           unaggregated model outputs, one row per TikTok
-      gemini_direct_video2values.csv     Gemini^d   (video -> values)
-      gemini_2step_script2values.csv     Gemini^2s  (script -> values)
-      mistral_2step_script2values.csv    Mistral^2s (script -> values)
-    cleaned/                       raw outputs after the cleaning step in notebooks/4_evaluation
+    llm/                           few-shot LLM predictions (Gemini, Mistral)
+      raw/                         unaggregated model outputs, one row per TikTok
+        gemini_direct_video2values.csv     Gemini^d   (video -> values)
+        gemini_2step_script2values.csv     Gemini^2s  (script -> values)
+        mistral_2step_script2values.csv    Mistral^2s (script -> values)
+      cleaned/                     raw outputs after the cleaning step in notebooks/4_evaluation
     mlm/                           per-fold predictions of the 3-fold CV MLM classifiers
-      roberta_large/                         RoBERTa^2s       fold{0,1,2}_predictions.csv
-      deberta_v2_xlarge/                     DeBERTa^2s
-      roberta_large_continued_pretraining/   RoBERTa^2s_PT
+      roberta_large/                           RoBERTa^2s     fold{0,1,2}_predictions.csv
+      deberta_v2_xlarge/                       DeBERTa^2s
+      roberta_large_continued_pretraining/     RoBERTa^2s_PT
       deberta_v2_xlarge_continued_pretraining/ DeBERTa^2s_PT
 prompts/                           exact LLM system instructions (see prompts/README.md)
   step1_video_to_script.txt        video -> script (2-step, step 1)
