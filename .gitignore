@@ -1,0 +1,16 @@
+# Local-only material (old versions, drafts, paper PDF, history backup) - never pushed
+_archive/
+
+# Credentials
+.env
+config.txt
+*.json.key
+
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
