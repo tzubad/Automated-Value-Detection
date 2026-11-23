@@ -19,6 +19,11 @@ data/
       gemini_2step_script2values.csv     Gemini^2s  (script -> values)
       mistral_2step_script2values.csv    Mistral^2s (script -> values)
     cleaned/                       raw outputs after the cleaning step in notebooks/4_evaluation
+    mlm/                           per-fold predictions of the 3-fold CV MLM classifiers
+      roberta_large/                         RoBERTa^2s       fold{0,1,2}_predictions.csv
+      deberta_v2_xlarge/                     DeBERTa^2s
+      roberta_large_continued_pretraining/   RoBERTa^2s_PT
+      deberta_v2_xlarge_continued_pretraining/ DeBERTa^2s_PT
 prompts/                           exact LLM system instructions (see prompts/README.md)
   step1_video_to_script.txt        video -> script (2-step, step 1)
   direct_video_to_values.txt       video -> values (direct)
@@ -58,6 +63,22 @@ Each TikTok therefore maps to a vector of 38 binary labels (19 endorsed and 19 c
 
 - **Identifiers:** in the ground truth, `1_Link1` is the public TikTok URL. In the prediction files, `filename` (or `1_Link1` in the cleaned files) is `@<handle>_video_<video id>`, which joins with the URL.
 - **Extra columns in the raw prediction files:** `Has_sound` and `Additional Notes`, both returned by the model.
+
+### MLM fold predictions
+
+Each `data/predictions/mlm/<model>/fold<k>_predictions.csv` has one row per TikTok (869 videos, all of them in the ground truth). Its columns are:
+
+| Column | Meaning |
+|---|---|
+| `original_path` | TikTok URL |
+| `path` | script/video file name (`@<handle>_video_<id>.mp4`) |
+| `split` | the role of the video in fold *k*: `train`, `test` or `none` |
+| `pred_<VALUE>` | binary prediction for the endorsed value |
+| `pred_<VALUE>_NEG` | binary prediction for the confronted value |
+
+- **Value codes:** SDT / SDA = self-direction thought/action, ST = stimulation, HE = hedonism, AC = achievement, POR / POD = power resources/dominance, FA = face, SEP / SES = security personal/societal, COR / COI = conformity rules/interpersonal, TR = tradition, HU = humility, BED / BEC = benevolence dependability/caring, UNC / UNN / UT = universalism concern/nature/tolerance.
+- **The `none` split:** 148 videos have `split = none` and are not used for training or testing in any fold. Across the 3 folds, each of the remaining 721 videos is in the test split exactly once.
+- **Results:** reported results are computed on the `test` rows of each fold and averaged over folds ("best-epoch averaging", see paper §4.2).
 
 ### Collection and annotation
 
